@@ -47,4 +47,21 @@ function generateSchedule(balance, annualRate, paymentAmount, extraPayments = {}
     }
     return schedule;
 }
-module.exports = {calculatePayment, generateSchedule};
+
+function calculateSummary(schedule, startDate){
+    const totalInterestPaid = schedule.reduce((sum, m) => sum + m.interestPortion, 0);
+    const totalPaid = schedule.reduce((sum, m) => sum + m.paymentAmount, 0);
+    const monthsToPayoff = schedule.length;
+
+    const start = new Date(startDate);
+    const payoffDate = new Date(start.getFullYear(), start.getMonth() + monthsToPayoff, start.getDate());
+
+    return {
+        totalInterestPaid,
+        totalPaid,
+        monthsToPayoff,
+        payoffDate: payoffDate.toISOString().split('T')[0]
+    };
+}
+
+module.exports = {calculatePayment, generateSchedule, calculateSummary};
