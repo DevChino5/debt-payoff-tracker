@@ -11,9 +11,7 @@ function calculatePayment(balance, annualRate, paymentAmount) {
     };
 }
 
-module.exports = {calculatePayment};
-
-function generateSchedule(balance, annualRate, paymentAmount){
+function generateSchedule(balance, annualRate, paymentAmount, extraPayments = {}){
     const monthlyRate = annualRate / 12;
     const firstMonthInterest = balance * monthlyRate;
 
@@ -28,7 +26,8 @@ function generateSchedule(balance, annualRate, paymentAmount){
     let month = 1;
 
     while (currentBalance > 0){
-        let payment = paymentAmount;
+        const extra = extraPayments[month] || 0;
+        let payment = paymentAmount + extra;
 
         if (payment > currentBalance + (currentBalance * (annualRate / 12))){
             payment = currentBalance + (currentBalance * (annualRate / 12));
@@ -38,6 +37,7 @@ function generateSchedule(balance, annualRate, paymentAmount){
         schedule.push({
             month,
             paymentAmount: payment,
+            extraAmount: extra,
             interestPortion: result.interestPortion,
             principalPortion: result.principalPortion,
             balance: result.newBalance
