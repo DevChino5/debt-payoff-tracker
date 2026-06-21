@@ -7,6 +7,9 @@ const PORT = 3000;
 app.use(cors());
 app.use(express.json());
 
+const debtRouter = require('./routes/debts');
+app.use('/api/debts', debtRouter);
+
 app.get('/api/health', (req, res) => {
     res.json({status: 'ok'});
 });

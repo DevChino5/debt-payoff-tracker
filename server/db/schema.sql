@@ -7,3 +7,15 @@ CREATE TABLE IF NOT EXISTS debts(
     minimum_payment REAL NOT NULL,
     created_at TEXT DEFAULT CURRENT_TIMESTAMP
 );
+
+CREATE TABLE IF NOT EXISTS payments(
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    debt_id INTEGER NOT NULL,
+    payment_date TEXT NOT NULL,
+    amount REAL NOT NULL,
+    is_extra INTEGER NOT NULL DEFAULT 0,
+    interest_portion REAL NOT NULL,
+    principal_portion REAL NOT NULL,
+    resulting_balance REAL NOT NULL,
+    FOREIGN KEY (debt_id) REFERENCES debts(id)
+)
