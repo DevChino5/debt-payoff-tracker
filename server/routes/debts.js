@@ -20,4 +20,9 @@ router.post('/', (req, res) => {
     res.status(201).json(newDebt);
 })
 
+router.get('/', (req, res) => {
+    const debts = db.prepare('SELECT * FROM debts ORDER BY created_at DESC').all();
+    res.json(debts);
+});
+
 module.exports = router;
