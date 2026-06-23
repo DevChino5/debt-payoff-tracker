@@ -12,6 +12,7 @@ CREATE TABLE IF NOT EXISTS payments(
     id INTEGER PRIMARY KEY AUTOINCREMENT,
     debt_id INTEGER NOT NULL,
     payment_date TEXT NOT NULL,
+    month_number INTEGER NOT NULL,
     amount REAL NOT NULL,
     is_extra INTEGER NOT NULL DEFAULT 0,
     interest_portion REAL NOT NULL,
